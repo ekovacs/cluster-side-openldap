@@ -1,0 +1,14 @@
+---
+- name: Install OpenLDAP server on target machine
+  hosts: all
+  become: true
+  roles:
+    - role: openldap_server
+      openldap_server_rootpw: my-secret-pass
+      openldap_server_enable_ssl: false
+      openldap_server_domain_name: example.com    # The domain prefix for ldap #ou=employees,dc=example,dc=com
+      openldap_server_country: US                 # The self signed ssl certificate parameters
+      openldap_server_state: California
+      openldap_server_location: California
+      openldap_server_organization: employees
+
