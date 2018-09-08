@@ -6,9 +6,42 @@
     - role: openldap_server
       openldap_server_rootpw: my-secret-pass
       openldap_server_enable_ssl: false
-      openldap_server_domain_name: example.com    # The domain prefix for ldap #ou=employees,dc=example,dc=com
+      openldap_server_domain_name: example    # The domain prefix for ldap #ou=employees,dc=example,dc=com
+      openldap_server_domain_tld: com    # The top level domain prefix for ldap #ou=employees,dc=example,dc=com
       openldap_server_country: US                 # The self signed ssl certificate parameters
       openldap_server_state: California
       openldap_server_location: California
       openldap_server_organization: employees
+
+      ldap_auth:
+        server_uri: ldap://localhost/
+        bind_dn: cn=Manager,dc={{ openldap_server_domain_name }},dc={{ openldap_server_domain_tld }}
+        bind_pw: "{{ openldap_server_rootpw }}"
+
+      users:
+        - hrt_qa
+        - hrt_qa@HDF.COM
+        - hrt_1@HDF.COM
+        - hrt_2@HDF.COM
+
+      ldap_groups:
+        - name: AdminGroup
+          members:
+            - hrt_qa@HDF.COM
+        - name: AllUsersGroup
+          members:
+            - hrt_qa@HDF.COM
+            - hrt_1@HDF.COM
+            - hrt_2@HDF.COM
+        - name: group1
+          members:
+            - hrt_qa
+        - name: TestUser1Group
+          members:
+            - hrt_qa@HDF.COM
+            - hrt_1@HDF.COM
+        - name: TestUser2Group
+          members:
+            - hrt_qa@HDF.COM
+            - hrt_2@HDF.COM
 
